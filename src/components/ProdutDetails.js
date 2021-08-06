@@ -11,17 +11,18 @@ const ProductDetails = () => {
   let product = useSelector((state) => state.product);
   const { image, title, price, category, description } = product;
   const dispatch = useDispatch();
-  const fetchProductDetail = async (id) => {
-    const response = await axios
-      .get(`https://fakestoreapi.com/products/${id}`)
-      .catch((err) => {
-        console.log("Err: ", err);
-      });
-    dispatch(selectedProduct(response.data));
-  };
+
 
   useEffect(() => {
-    if (productId && productId !== "") fetchProductDetail(productId);
+    const fetchProductDetail = async (id) => {
+      const response = await axios
+        .get(`https://fakestoreapi.com/products/${id}`)
+        .catch((err) => {
+          console.log("Err: ", err);
+        });
+      dispatch(selectedProduct(response.data));
+    };
+    if (productId && productId !== "") {fetchProductDetail(productId);}
     return () => {
       dispatch(removeSelectedProduct());
     };
@@ -38,12 +39,12 @@ const ProductDetails = () => {
             <div className="ui vertical divider">AND</div>
             <div className="middle aligned row">
               <div className="column lp">
-                <img className="ui fluid image" src={image} />
+                <img className="ui fluid image" src={image}  alt={title}/>
               </div>
               <div className="column rp">
                 <h1>{title}</h1>
                 <h2>
-                  <a className="ui teal tag label">${price}</a>
+                  <p className="ui teal tag label">${price}</p>
                 </h2>
                 <h3 className="ui brown block header">{category}</h3>
                 <p>{description}</p>

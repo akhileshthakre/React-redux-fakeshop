@@ -7,18 +7,19 @@ const ProductLisiting = () => {
 
     const products = useSelector((state) => state.allProducts.products)
     const dispatch = useDispatch()
-    const fetchProducts = async () => {
-      const response = await axios
-        .get("https://fakestoreapi.com/products")
-        .catch((err) => {
-          console.log("Err: ", err)
-        })
-      dispatch(setProducts(response.data))
-    }
-  
+
     useEffect(() => {
+      
+      const fetchProducts = async () => {
+        const response = await axios
+          .get("https://fakestoreapi.com/products")
+          .catch((err) => {
+            console.log("Err: ", err)
+          })
+        dispatch(setProducts(response.data))
+      }
       fetchProducts();
-    }, [])
+    },[])
   
     console.log("Products :", products)
     return (
